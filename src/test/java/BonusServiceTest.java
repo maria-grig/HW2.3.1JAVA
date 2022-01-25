@@ -1,59 +1,16 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BonusServiceTest {
+    BonusService service = new BonusService();
 
-    @Test
-    void shouldCalculateRegisteredBonusUnderLimit() {
-        BonusService service = new BonusService();
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/data/data.csv"}, delimiter = '|', numLinesToSkip = 2);
 
-        long amount = 1000_60;
-        boolean registered = true;
-        long expected = 30;
-
+    void calculateWithCsvFileSource(String test, long amount, boolean registered, long expected) {
         long actual = service.calculate(amount, registered);
-
         assertEquals(expected, actual);
     }
-
-
-        @Test
-        void shouldCalculateRegisteredBonusOverLimit() {
-        BonusService service = new BonusService();
-
-        long amount = 1000_000_60;
-        boolean registered = true;
-        long expected = 500;
-
-        long actual = service.calculate(amount, registered);
-
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    void shouldCalculateNotRegisteredBonusUnderLimit() {
-        BonusService service = new BonusService();
-
-        long amount = 1000_00;
-        boolean registered = false;
-        long expected = 10;
-
-        long actual = service.calculate(amount, registered);
-
-        assertEquals(expected, actual);
-    }
-    @Test
-    void shouldCalculateNotRegisteredBonusOverLimit() {
-        BonusService service = new BonusService();
-
-        long amount = 100_000_00;
-        boolean registered = false;
-        long expected = 500;
-
-        long actual = service.calculate(amount, registered);
-
-        assertEquals(expected, actual);
-    }
-
 }
