@@ -1,0 +1,6 @@
+CASE                                   | SUM        | REGISTERED | BONUS EXPECTED
+---------------------------------------------------------------------------------
+registered user, bonus under limit     | 100060     | true       | 30
+registered user, bonus over limit      | 100000060  | true       | 500
+not registered user, bonus under limit | 1000_00    | false      | 10
+not registered user, bonus over limit  | 100_000_00 | false      | 500
